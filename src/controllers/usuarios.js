@@ -1,16 +1,19 @@
 const { response, request } = require('express');
-const Usuario = require('../models/usuario')
+const Usuario = require('../models/usuario');
+const nodemailer = require('nodemailer');
+const stulzelEmail = process.env.userMail;
+const passwordEmail = process.env.passwordMail;
 
-// const transporter = nodemailer.createTransport({
-//     service: 'Gmail',
-//     auth: {
-//         user: stulzelEmail,
-//         pass: passwordEmail
-//     },
-//     tls: {
-//         rejectUnauthorized: false
-//     }
-// });
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: "bastianorellanaf@gmail.com",
+            pass: "bastian262"
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
 
 const usuariosGet = async (req = request, res = response) => {
 
@@ -43,31 +46,33 @@ const usuariosPost = async (req, res = response) => {
                 if(!userStored){
                     res.status(500).send({ ok: false, message: "Error al crear el usuario" });
                 }else{
-                    // const mailOptions = {
-                    //     from: `Health Tech Latam <${stulzelEmail}>`,
-                    //     to: userStored.email,
-                    //     subject: 'Prueba mail',
-                    //     text: 'PruebaMail',
-                    //     html: `
-                    //     <html>
-                    //         <head>
-                    //             <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-                    //             <title>Stulzel!</title>
-                    //         </head>
-                    //         <body style="background:#f6f6f6;">
-                               
-                    //             <h1> PRUEBA </h1>
-                    //         </body>
-                    //     </html>
-                    //     `
-                    // };
-                    // transporter.sendMail(mailOptions, function(error, info){
-                    //     if(error){
-                    //         res.status(500).send({ ok: false, message: "Error del servidor"});
-                    //     } else {
+                    console.log(userStored);
+                    console.log(1);
+                    const mailOptions = {
+                        from: `STULZEL <${stulzelEmail}>`,
+                        to: userStored.correo,
+                        subject: 'Prueba mail',
+                        text: 'Prueba Mail',
+                        html: `
+                        <html>
+                            <head>
+                                <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+                                <title>Stulzel!</title>
+                            </head>
+                            <body style="background:#f6f6f6;">
+                                <h1> PRUEBA </h1>
+                            </body>
+                        </html>
+                        `
+                    };
+                    transporter.sendMail(mailOptions, function(error, info){
+                        if(error){
+                            console.log(error);
+                            res.status(500).send({ ok: false, message: "Error del servidor de correo"});
+                        } else {
                             res.status(200).send({ ok: true, message: "usuario Agregado correctamente ", user: user });
-                    //     }
-                    // });
+                        }
+                    });
                 }
             }
         });
