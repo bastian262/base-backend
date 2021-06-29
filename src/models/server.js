@@ -16,7 +16,11 @@ class Server {
         this.conectarDB();
     }
     async conectarDB (){
-        await dbConection();
+        try{
+            await dbConection();
+        }catch(error){
+            throw new Error(error.message);
+        }
     }
     middlewares() {
 
