@@ -15,7 +15,12 @@ router.get('/', usuariosGet );
 
 // router.put('/:id', usuariosPut );
 
-router.post('/', usuariosPost );
+router.post('/',[
+    check('correo','El correo no es válido').isEmail(),
+    check('correo').custom(correoExiste),
+    check('nombre','El nombre no es válido').not().isEmpty(),
+    validarCampos
+], usuariosPost );
 
 router.delete('/:id', usuariosDelete );
 
