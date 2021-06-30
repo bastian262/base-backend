@@ -7,8 +7,8 @@ const passwordEmail = process.env.passwordMail;
     const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: "bastianorellanaf@gmail.com",
-            pass: "bastian262"
+            user: "mailingstulzel@gmail.com",
+            pass: "Stulzel385#"
         },
         tls: {
             rejectUnauthorized: false
@@ -46,31 +46,36 @@ const usuariosPost = async (req, res = response) => {
                 if(!userStored){
                     res.status(500).send({ ok: false, message: "Error al crear el usuario" });
                 }else{
-                    console.log(userStored);
-                    console.log(1);
                     const mailOptions = {
                         from: `STULZEL <${stulzelEmail}>`,
                         to: userStored.correo,
-                        subject: 'Prueba mail',
-                        text: 'Prueba Mail',
+                        subject: "¡Registro exitoso!",
+                        text: 'Gracias por participar en este increible webinar!',
                         html: `
-                        <html>
+                        <html lang="en">
                             <head>
-                                <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-                                <title>Stulzel!</title>
+                                <title>Stulzel</title>
                             </head>
-                            <body style="background:#f6f6f6;">
-                                <h1> PRUEBA </h1>
+                            <body style="margin: 0px;">
+                                <table style="width:100%; max-width:700px; margin: 0 auto;border-spacing: 0px;">
+                                    <tr>
+                                        <th style="width: 100%;">
+                                            <a href="https://stulzel.com/webinar/">
+                                                <img src="https://stulzel.com/wp-content/uploads/2021/06/MAILING-APOYO-PYMES-REGISTRO.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
+                                            </a>
+                                            <img src="https://stulzel.com/wp-content/uploads/2021/06/unnamed.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto; transform: translateY(-3px);">
+                                        </th>
+                                    </tr>
+                                </table>
                             </body>
                         </html>
                         `
                     };
                     transporter.sendMail(mailOptions, function(error, info){
                         if(error){
-                            console.log(error);
                             res.status(500).send({ ok: false, message: "Error del servidor de correo"});
                         } else {
-                            res.status(200).send({ ok: true, message: "usuario Agregado correctamente ", user: user });
+                            res.status(200).send({ ok: true, message: "Usuario agregado correctamente ", user: user });
                         }
                     });
                 }
