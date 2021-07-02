@@ -3,6 +3,7 @@ const { Router } = require('express');
 const {check} = require('express-validator');
 const {validarCampos, correoExiste} = require('../middlewares/validar-campos');
 const { usuariosGet,
+        signIn,
         // usuariosPut,
         usuariosPost,
         usuariosDelete,

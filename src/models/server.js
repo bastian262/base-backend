@@ -8,6 +8,8 @@ class Server {
         this.app  = express();
         this.port = process.env.PORT || 27017;
         this.usuariosPath = '/api/usuarios';
+        this.questionPath = '/api/question';
+        this.signInPath = '/api/signIn';
         // Middlewares
         this.middlewares();
         // Rutas de mi aplicación
@@ -40,6 +42,8 @@ class Server {
 
     routes() {
         this.app.use( this.usuariosPath, require('../routes/usuarios'));
+        this.app.use( this.questionPath, require('../routes/questions'));
+        this.app.use( this.signInPath, require('../routes/signIn'));
     }
 
     listen() {

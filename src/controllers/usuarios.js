@@ -1,13 +1,15 @@
 const { response, request } = require('express');
 const Usuario = require('../models/usuario');
 const nodemailer = require('nodemailer');
+const moment = require("moment");
+require('moment/locale/es');
 const stulzelEmail = process.env.userMail;
 const passwordEmail = process.env.passwordMail;
 
     const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: "mailingstulzel@gmail.com",
+            user: "mailingstulzel1@gmail.com",
             pass: "Stulzel385#"
         },
         tls: {
@@ -128,11 +130,43 @@ const usuariosDelete = async (req, res = response) => {
 
 }
 
+function signIn(req, res) {
+    let { correo } = req.body;
 
+    correo = correo.toString().toLowerCase();
+    const signInTime = moment().subtract(3, 'hours').format('LLL');
+
+    Usuario.findOne({correo}, (err, userStored) => {
+        if (err) {
+            res.status(500).send({ ok: false, message: "Error del servidor"});
+        } else {
+            if (!userStored) {
+                res.status(404).send({ ok: false, message: "Usuario no encontrado"});
+            } else {
+                    userStored.signInTime = signInTime;
+                    Usuario.findByIdAndUpdate({ _id: userStored.id }, userStored, (err, userUpdate) => {
+                        if (err) {
+                            res.status(500).send({ ok: false, message: "Error del servidor"});
+                        } else {
+                            if (!userUpdate) {
+                                res.status(404).send({ ok: false, message: "No se ha encontrado el usuario"});
+                            } else {
+                                res.status(200).send({
+                                    ok: true,
+                                    user:userUpdate
+                                });
+                            }
+                        }
+                    });
+            }
+        }
+    });
+}
 
 
 module.exports = {
     usuariosGet,
     usuariosPost,
     usuariosDelete,
+    signIn
 }
