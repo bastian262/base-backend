@@ -130,37 +130,50 @@ const usuariosDelete = async (req, res = response) => {
 
 }
 
-function signIn(req, res) {
+async function signIn(req, res)  {
+
     let { correo } = req.body;
-
+    let contador = 0;
     correo = correo.toString().toLowerCase();
-    const signInTime = moment().subtract(3, 'hours').format('LLL');
-
-    Usuario.findOne({correo}, (err, userStored) => {
-        if (err) {
-            res.status(500).send({ ok: false, message: "Error del servidor"});
-        } else {
-            if (!userStored) {
-                res.status(404).send({ ok: false, message: "Usuario no encontrado"});
-            } else {
-                    userStored.signInTime = signInTime;
-                    Usuario.findByIdAndUpdate({ _id: userStored.id }, userStored, (err, userUpdate) => {
-                        if (err) {
-                            res.status(500).send({ ok: false, message: "Error del servidor"});
-                        } else {
-                            if (!userUpdate) {
-                                res.status(404).send({ ok: false, message: "No se ha encontrado el usuario"});
-                            } else {
-                                res.status(200).send({
-                                    ok: true,
-                                    user:userUpdate
-                                });
-                            }
-                        }
-                    });
-            }
+    // const signInTime = moment().subtract(3, 'hours').format('LLL');
+    const resultado = await Usuario.find();
+    resultado.forEach((element,index) => {
+        if(correo == element.correo.toString().toLowerCase()){
+            contador = contador + 1;
+            res.status(200).send({
+                ok: true,
+                user:element
+            });
         }
     });
+    if(contador == 0){
+        res.status(404).send({ ok: false, message: "No se ha encontrado el usuario"});
+    }
+    // Usuario.findOne({$toLower: correo}, (err, userStored) => {
+    //     if (err) {
+    //         res.status(500).send({ ok: false, message: "Error del servidor"});
+    //     } else {
+    //         if (!userStored) {
+    //             res.status(404).send({ ok: false, message: "Usuario no encontrado"});
+    //         } else {
+    //                 userStored.signInTime = signInTime;
+    //                 Usuario.findByIdAndUpdate({ _id: userStored.id }, userStored, (err, userUpdate) => {
+    //                     if (err) {
+    //                         res.status(500).send({ ok: false, message: "Error del servidor"});
+    //                     } else {
+    //                         if (!userUpdate) {
+    //                             res.status(404).send({ ok: false, message: "No se ha encontrado el usuario"});
+    //                         } else {
+    //                             res.status(200).send({
+    //                                 ok: true,
+    //                                 user:userUpdate
+    //                             });
+    //                         }
+    //                     }
+    //                 });
+    //         }
+    //     }
+    // });
 }
 
 
