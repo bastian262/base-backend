@@ -18,7 +18,6 @@ const passwordEmail = process.env.passwordMail;
     });
 
 const usuariosGet = async (req = request, res = response) => {
-
     // const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
     const { desde = 0 } = req.query;
     try{
@@ -37,13 +36,14 @@ const usuariosGet = async (req = request, res = response) => {
 
 const usuariosPost = async (req, res = response) => {
     
-    const {nombre, correo, telefono} = req.body;
-    const user = new Usuario({nombre, telefono, correo});
+    const {nombre, correo, telefono, direccion} = req.body;
+    const user = new Usuario({nombre, telefono, correo, direccion});
     user.rol = "USER_ROLE";
+    console.log(user);
     try{
         await user.save((err, userStored) => {
             if(err){
-                res.status(400).send({ok:fakse, message:"El correo ya fue registrado"});
+                res.status(400).send({ok:false, message:"El correo ya fue registrado"});
             }else{
                 if(!userStored){
                     res.status(500).send({ ok: false, message: "Error al crear el usuario" });
@@ -54,18 +54,49 @@ const usuariosPost = async (req, res = response) => {
                         subject: "¡Registro exitoso!",
                         text: 'Gracias por participar en este increible webinar!',
                         html: `
+                        <!DOCTYPE html>
                         <html lang="en">
                             <head>
-                                <title>Stulzel</title>
+                                <meta charset="UTF-8">
+                                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Curso WhatsApp</title>
                             </head>
                             <body style="margin: 0px;">
-                                <table style="width:100%; max-width:700px; margin: 0 auto;border-spacing: 0px;">
+                                <table style="width:100%; max-width:700px; margin: 0 auto; border-spacing: 0px; border-collapse:collapse; box-sizing:content-box; background-color: black; background-size: cover;">
                                     <tr>
                                         <th style="width: 100%;">
-                                            <a href="https://stulzel.com/webinar/">
-                                                <img src="https://stulzel.com/wp-content/uploads/2021/06/MAILING-APOYO-PYMES-REGISTRO.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
-                                            </a>
-                                            <img src="https://stulzel.com/wp-content/uploads/2021/06/unnamed.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto; transform: translateY(-3px);">
+                                            <!-- <a href="https://stulzel.com/categoria-producto/ofertas/" style="margin: 0;"> -->
+                                                <img src="https://stulzel.com/wp-content/uploads/2021/07/headerMail.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
+                                            <!-- </a> -->
+                                        </th>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; max-width:700px; margin: 0 auto 0; border-spacing: 0px; background-image: url(https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-1.jpg); background-size: cover;">
+                                    <tr style="width: 100%; max-width: 700px;">
+                                        <td style="width: 100%;">
+                                            <img src="https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-1.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; max-width:700px; margin: 0 auto 0; border-spacing: 0px; background-image: url(https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-2.jpg); background-size: cover;">
+                                    <tr style="width: 100%; max-width: 700px;">
+                                        <td style="width: 100%;">
+                                            <img src="https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-2.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; max-width:700px; margin: 0 auto 0; border-spacing: 0px; background-image: url(https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-3.jpg);background-size: cover;">
+                                    <tr style="width: 100%; max-width: 700px;">
+                                        <td style="width: 100%;">
+                                            <img src="https://stulzel.com/wp-content/uploads/2021/07/MAILING-INSCRITO-3.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; max-width:700px; margin: 0 auto; border-spacing: 0px; background-color: black;">
+                                    <tr>
+                                        <th style="width: 100%;">
+                                            <img src="https://stulzel.com/wp-content/uploads/2021/06/unnamed.jpg" alt="" style="width: 100%; max-width: 700px; margin: 0 auto;">
                                         </th>
                                     </tr>
                                 </table>

@@ -15,6 +15,10 @@ const UsuarioSchema = Schema({
         required:[true, 'El correo es obligatorio'],
         unique:true
     },
+    direccion:{
+        type:String,
+        required:[true, 'La dirección es obligatoria']
+    },
     rol:{
         type:String,
         required:true,
