@@ -6,16 +6,16 @@ require('moment/locale/es');
 const stulzelEmail = process.env.userMail;
 const passwordEmail = process.env.passwordMail;
 
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: "mailingstulzel1@gmail.com",
-            pass: "Stulzel385#"
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: "mailingstulzel1@gmail.com",
+        pass: "Stulzel385#"
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
 
 const usuariosGet = async (req = request, res = response) => {
     // const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
