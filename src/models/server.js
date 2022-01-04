@@ -10,6 +10,7 @@ class Server {
         this.usuariosPath = '/api/usuarios';
         this.questionPath = '/api/question';
         this.signInPath = '/api/signIn';
+        this.mailerPath = '/api/mailer';
         // Middlewares
         this.middlewares();
         // Rutas de mi aplicación
@@ -44,6 +45,7 @@ class Server {
         this.app.use( this.usuariosPath, require('../routes/usuarios'));
         this.app.use( this.questionPath, require('../routes/questions'));
         this.app.use( this.signInPath, require('../routes/signIn'));
+        this.app.use( this.mailerPath, require('../routes/mailer'));
     }
 
     listen() {
