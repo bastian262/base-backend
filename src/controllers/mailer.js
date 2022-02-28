@@ -2,7 +2,7 @@ const axios = require('axios');
 
 function postSuscriptorVenta(req, res) {
     try{
-        console.log("LLEGUE !!!!")
+
         const { id_group, email, phone, name, lastName, address } = req.body;
     
         const data = {
@@ -29,7 +29,6 @@ function postSuscriptorVenta(req, res) {
 
         axios.post(`https://api.mailerlite.com/api/v2/groups/${id_group}/subscribers`, JSON.stringify(data), config)
         .then(response => {
-            console.log(response);
             return res.status(200).json({
                 ok:true,
                 message:'Cliente agregado correctamente'
