@@ -27,6 +27,8 @@ const sendMailGira = (req, res) => {
     }
 
     transporter.sendMail(mailOptions, (err, info) => {
+        console.log(err)
+        console.log(info)
         if (err) return res.status(500).json({ ok: false, message: "Error al enviar correo" })
         return res.status(200).json({ ok: true, message: "Correo enviado exitosamente!" })
     })
