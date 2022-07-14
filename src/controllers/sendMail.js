@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const { emailGira } = require("../utils/templates");
-const stulzelEmail = "mailingstulzel1@gmail.com";
+const stulzelEmail = "mailingstulzel@gmail.com";
 const passwordEmail = "Stulzel385#";
 
 const transporter = nodemailer.createTransport({
